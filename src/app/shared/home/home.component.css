@@ -1,0 +1,12 @@
+.nav-link {
+  cursor: pointer;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+  padding: 0.5rem 1rem; /* Added padding for better hover effect */
+  border-radius: 0.25rem; /* Added border-radius for rounded corners */
+}
+
+.nav-link:hover {
+  color: #fff; /* Change text color on hover */
+  background-color: rgba(112, 128, 144, 0.8); /* Change background color on hover */
+  border-radius: 0.5rem; /* Increase border-radius for more rounded corners on hover */
+}
