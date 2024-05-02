@@ -1,0 +1,12 @@
+.profile-picture {
+  max-height: 60px;
+  max-width: 100px;
+  border-radius: 50%;
+  cursor: pointer;
+  padding-right: 20px;
+  transition: transform 0.3s; /* Add a smooth transition effect */
+}
+
+.profile-picture:hover {
+  transform: translate(-5%, -5%); /* Move the picture up and to the left slightly */
+}

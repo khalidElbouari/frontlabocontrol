@@ -1,0 +1,23 @@
+.nav-link {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #fff;
+  background-color: rgb(0, 0, 255);
+  border-radius: 1rem;
+}
+
+/* Navbar styling */
+.navbar-scroll {
+  background-color: rgba(255, 255, 255, 0.9); /* White background with opacity */
+  background-image: linear-gradient(to right, #add8e6, #ffb6c1); /* Light blue to light red gradient */
+}
+
+.navbar-scroll .navbar-brand img {
+  /* Adjust the logo styling when the background changes */
+  filter: brightness(100%); /* Keep the logo colors as they are */
+}
