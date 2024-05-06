@@ -10,18 +10,20 @@ import {authenticationGuard} from "./guards/authentication.guard";
 import {CategoryComponent} from "./features/category/category.component";
 import {authorizationGuard} from "./guards/authorization.guard";
 import {NotAuthorizedComponent} from "./authentication/not-authorized/not-authorized.component";
+import {LabostoreComponent} from "./features/labostore/labostore.component";
 
 export const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent, pathMatch: 'full' },
   { path: 'signup', component: SignUpComponent, pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'labostore', component: LabostoreComponent, pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
 
-  { path: 'admin', component: AdminTemplateComponent, canActivate: [authenticationGuard], // Utilisation du guard
+  { path: '', component: AdminTemplateComponent, canActivate: [authenticationGuard], // Utilisation du guard
     children:[
-      { path: 'products', component: ProductComponent ,canActivate:[authorizationGuard], data :{role : "ADMIN"} },
-      { path: 'category', component: CategoryComponent}
+      { path: 'products', component: ProductComponent, canActivate: [authorizationGuard], data: { role: "ADMIN" } },
+      { path: 'category', component: CategoryComponent }
     ] },
-  {path:'not-authorized',component:NotAuthorizedComponent},
-  {path:'**',component:PageNoteFoundComponent},
+  { path: 'not-authorized', component: NotAuthorizedComponent },
+  { path: '**', component: PageNoteFoundComponent },
 ];

@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {jwtDecode} from "jwt-decode";
 import {Utilisateur} from "../../entities/Utilisateur";
 import {map, Observable} from "rxjs";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,14 @@ export class AuthService {
 
 
 
-  constructor(private http:HttpClient,private router: Router) { }
+  constructor(private http:HttpClient,private router: Router) {
+    // Subscribe to NavigationEnd event to trigger token expiration check after each navigation
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.loadTokenFromLocalStorage();
+      }
+    });
+  }
   public login(username: String,password: String){
     let options={
      headers: new HttpHeaders().set("Content-Type","application/x-www-form-urlencoded")
@@ -51,6 +58,7 @@ export class AuthService {
     return this.http.post<any>('http://localhost:8055/auth/register', formData);
   }
 
+
   logout() {
     // Clear authentication state
     this.isAuthenticated = false;
@@ -62,12 +70,39 @@ export class AuthService {
     this.router.navigateByUrl('/login');
   }
 
-  loadTokenFromLocalStorage(){
+
+
+/*  loadTokenFromLocalStorage(){
     let token=localStorage.getItem("accessToken");
     if(token){
       this.loadProfile({"access-token":token});
     }else{
-      this.router.navigateByUrl("/admin/category")
+      this.router.navigateByUrl("/login")
     }
+  }*/
+
+
+  loadTokenFromLocalStorage() {
+    let token = localStorage.getItem("accessToken");
+    if (token) {
+      if (this.isTokenExpired(token)) {
+        alert('Your session has expired. Please log in again.');
+        this.isAuthenticated = false;
+        this.username = undefined;
+        this.roles = undefined;
+        localStorage.removeItem('accessToken');
+        this.router.navigateByUrl("/login");
+      } else {
+        this.loadProfile({ "access-token": token });
+      }
+    } else {
+      this.router.navigateByUrl("/login");
+    }
+  }
+
+  isTokenExpired(token: string): boolean {
+    let decodedToken: any = jwtDecode(token);
+    let currentTime = Math.floor(Date.now() / 1000);
+    return decodedToken.exp < currentTime;
   }
 }
