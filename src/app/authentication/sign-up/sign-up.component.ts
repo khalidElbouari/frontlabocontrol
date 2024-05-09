@@ -39,6 +39,7 @@ constructor( private snackBar: MatSnackBar
   }
 
   handleRegistration() {
+
     if (this.formRegistration.valid) {
       const utilisateur: Utilisateur = {
         nom: this.formRegistration.value.nom,

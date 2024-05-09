@@ -1,0 +1,118 @@
+
+/*** Topbar Start ***/
+.fixed-top {
+  transition: 0.5s;
+  background: var(--bs-white);
+  border: 0;
+}
+
+.topbar {
+  padding: 20px;
+  border-radius: 230px 100px;
+}
+
+.topbar .top-info {
+  font-size: 15px;
+  line-height: 0;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.topbar .top-link {
+  font-size: 15px;
+  line-height: 0;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.topbar .top-link a {
+  letter-spacing: 1px;
+}
+
+.topbar .top-link a small:hover {
+  color: var(--bs-secondary) !important;
+  transition: 0.5s;
+}
+
+.topbar .top-link a small:hover i {
+  color: var(--bs-primary) !important;
+}
+/*** Topbar End ***/
+
+/*** Navbar Start ***/
+.navbar .navbar-nav .nav-link {
+  padding: 10px 15px;
+  font-size: 16px;
+  transition: .5s;
+}
+
+.navbar {
+  height: 100px;
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link.active,
+.fixed-top.bg-white .navbar .navbar-nav .nav-link:hover,
+.fixed-top.bg-white .navbar .navbar-nav .nav-link.active {
+  color: var(--bs-primary);
+}
+
+.navbar .dropdown-toggle::after {
+  border: none;
+  content: "\f107";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 700;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+/*POUR */
+@media (min-width: 1200px) {
+  .navbar .nav-item .dropdown-menu {
+    display: block;
+    visibility: hidden;
+    top: 110%;
+    left: auto; /* Reset left property */
+    right: 1px; /* Adjust this value to move the menu to the right */
+    transform: rotateX(-75deg);
+    transform-origin: 0% 0%;
+    border: 0;
+    transition: .5s;
+    opacity: 0;
+  }
+}
+
+
+.dropdown .dropdown-menu a:hover {
+  background: var(--bs-secondary);
+  color: var(--section-background-color);
+}
+
+.navbar .nav-item:hover .dropdown-menu {
+  transform: rotateX(0deg);
+  visibility: visible;
+  background: var(--bs-light) !important;
+  border-radius: 10px !important;
+  transition: .5s;
+  opacity: 1;
+}
+
+/*--------------------------------*/
+.logo {
+  width: 180px; /* Adjust the width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+.profile-picture {
+  max-height: 60px;
+  max-width: 100px;
+  border-radius: 50%;
+  cursor: pointer;
+  padding-right: 20px;
+  transition: transform 0.3s; /* Add a smooth transition effect */
+}
+
+.profile-picture:hover {
+  transform: translate(-5%, -5%); /* Move the picture up and to the left slightly */
+}

@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit{
     this.authservise.login(username, password).subscribe(
       (data: any) => {
         this.authservise.loadProfile(data);
-        this.router.navigateByUrl("/category");
+        this.router.navigateByUrl("/labostore");
       },
       err => {
         console.error("Error:", err);

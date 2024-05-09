@@ -1,22 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../../services/product.service';
+import {Component, Input, OnInit} from '@angular/core';
+import { ProductService } from '../../services/security/Product/product.service';
 import { Product } from '../../entities/Product';
 import {CommonModule, NgForOf} from "@angular/common";
+import {AddProductModalComponent} from "../add-product-modal/add-product-modal.component";
+import {timestamp} from "rxjs";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    AddProductModalComponent
   ],
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
   products: Product[] = [];
   selectedProduct: Product | null = null;
+  @Input() prods!: Product[];
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
@@ -26,6 +31,7 @@ export class ProductComponent implements OnInit {
   loadProducts(): void {
     this.productService.getAllProducts().subscribe(
       data => {
+        console.log(data);
         this.products = data;
       },
       error => {
@@ -66,4 +72,31 @@ export class ProductComponent implements OnInit {
       );
     }
   }
+  // Subscribe to the productAdded event emitted by AddProductComponent
+  onProductAdded(): void {
+    // Reload the products
+    this.loadProducts();
+  }
+  addToCart(product: Product) {
+  }
+  // New method to generate image URL
+  getImageUrl(product: Product): SafeUrl {
+    if (product.imagePath) {
+      return this.sanitizer.bypassSecurityTrustUrl(`http://localhost:8055/${product.imagePath}`);
+    } else {
+      return 'assets/placeholder-image.jpg'; // Update with your placeholder image path
+    }
+  }
+
+
+  getImageSrc(product: Product): string {
+    if (product.imageData) {
+      return `data:image/jpeg;base64,${product.imageData}`;
+    } else {
+      return 'assets/placeholder-image.jpg'; // Replace with your placeholder image path
+    }
+  }
+
+
+
 }

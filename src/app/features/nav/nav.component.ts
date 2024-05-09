@@ -1,21 +1,21 @@
-import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
+import { Component } from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {AuthService} from "../../../services/security/auth.service";
 import {NgIf} from "@angular/common";
+import {AuthService} from "../../services/security/auth.service";
 
 @Component({
-  selector: 'app-navbar',
+  selector: 'app-nav',
   standalone: true,
   imports: [
     RouterLink,
     NgIf
   ],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  templateUrl: './nav.component.html',
+  styleUrl: './nav.component.css'
 })
-export class NavbarComponent implements OnInit {
+export class NavComponent {
   profilePictureUrl: string ='';
-  constructor(private authService: AuthService) { }
+  constructor(protected authService: AuthService) { }
   logout(): void {
     this.authService.logout();
   }

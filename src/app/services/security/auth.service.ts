@@ -13,7 +13,7 @@ export class AuthService {
   roles : any;
   username : any;
   accessToken! : string;
-
+  fullName!:string;
 
 
   constructor(private http:HttpClient,private router: Router) {
@@ -38,12 +38,13 @@ export class AuthService {
     let decodedJwt:any= jwtDecode(this.accessToken);
     this.username=decodedJwt.sub;
     this.roles=decodedJwt.scope;
-    console.log(decodedJwt.profilePictureUrl);
+    this.fullName=decodedJwt.fullName;
     // Store access token and profile picture URL in local storage
     localStorage.setItem('accessToken', data['access-token']);
 // Check if profilePictureUrl is null or undefined
     const profilePictureUrl = decodedJwt.profilePictureUrl.includes('null') ? '/assets/favicon/defaultProfile.jpg' : decodedJwt.profilePictureUrl;
     localStorage.setItem('profilePictureUrl', profilePictureUrl);
+    console.log(data);
     console.log(decodedJwt);
   }
 
@@ -67,10 +68,8 @@ export class AuthService {
     // Remove stored tokens
     localStorage.removeItem('accessToken');
     // Navigate to login page
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl( '/labostore');
   }
-
-
 
 /*  loadTokenFromLocalStorage(){
     let token=localStorage.getItem("accessToken");
@@ -95,8 +94,6 @@ export class AuthService {
       } else {
         this.loadProfile({ "access-token": token });
       }
-    } else {
-      this.router.navigateByUrl("/login");
     }
   }
 
