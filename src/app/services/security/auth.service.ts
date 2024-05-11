@@ -14,6 +14,7 @@ export class AuthService {
   username : any;
   accessToken! : string;
   fullName!:string;
+  imageData!: Uint8Array; // Change the type to Uint8Array
 
 
   constructor(private http:HttpClient,private router: Router) {
@@ -39,17 +40,24 @@ export class AuthService {
     this.username=decodedJwt.sub;
     this.roles=decodedJwt.scope;
     this.fullName=decodedJwt.fullName;
-    // Store access token and profile picture URL in local storage
+    this.imageData = this.base64ToArrayBuffer(data['imageData']);
+    // Store access token in local storage
     localStorage.setItem('accessToken', data['access-token']);
-// Check if profilePictureUrl is null or undefined
-    const profilePictureUrl = decodedJwt.profilePictureUrl.includes('null') ? '/assets/favicon/defaultProfile.jpg' : decodedJwt.profilePictureUrl;
-    localStorage.setItem('profilePictureUrl', profilePictureUrl);
+    localStorage.setItem('userData', JSON.stringify(data));
+
     console.log(data);
     console.log(decodedJwt);
   }
-
-
-  register(utilisateur: Utilisateur, profilePicture: File): Observable<any> {
+  // Function to convert base64 to Uint8Array
+  base64ToArrayBuffer(base64: string): Uint8Array {
+    const binaryString = window.atob(base64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
+  }
+  register(utilisateur: any, profilePicture: File): Observable<any> {
     const formData = new FormData();
     formData.append('nom', utilisateur.nom);
     formData.append('prenom', utilisateur.prenom);
@@ -67,22 +75,16 @@ export class AuthService {
     this.roles=undefined;
     // Remove stored tokens
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('userData');
     // Navigate to login page
     this.router.navigateByUrl( '/labostore');
   }
 
-/*  loadTokenFromLocalStorage(){
-    let token=localStorage.getItem("accessToken");
-    if(token){
-      this.loadProfile({"access-token":token});
-    }else{
-      this.router.navigateByUrl("/login")
-    }
-  }*/
-
 
   loadTokenFromLocalStorage() {
     let token = localStorage.getItem("accessToken");
+    let data = JSON.parse(localStorage.getItem("userData") || '{}'); // Retrieve the entire data object from local storage
+
     if (token) {
       if (this.isTokenExpired(token)) {
         alert('Your session has expired. Please log in again.');
@@ -92,10 +94,11 @@ export class AuthService {
         localStorage.removeItem('accessToken');
         this.router.navigateByUrl("/login");
       } else {
-        this.loadProfile({ "access-token": token });
+        this.loadProfile(data); // Pass the entire data object to loadProfile
       }
     }
   }
+
 
   isTokenExpired(token: string): boolean {
     let decodedToken: any = jwtDecode(token);

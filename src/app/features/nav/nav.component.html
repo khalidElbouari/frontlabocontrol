@@ -35,7 +35,7 @@
           </a>
           <div class="nav-item dropdown me-5">
             <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img *ngIf="authService.isAuthenticated" [src]="profilePictureUrl" alt="Profile" class="profile-picture" id="profilePicture">
+              <img *ngIf="authService.isAuthenticated" [src]="getImageSrc()" alt="Profile" class="profile-picture" id="profilePicture">
               <i *ngIf="!authService.isAuthenticated" class="bi bi-person-x" style="font-size: 23px;"></i> <!-- Default person icon -->
             </a>
             <div class="dropdown-menu">

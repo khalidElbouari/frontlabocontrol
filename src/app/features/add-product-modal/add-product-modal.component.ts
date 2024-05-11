@@ -1,5 +1,5 @@
-import {Component, EventEmitter, OnInit, Output, signal} from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ProductService} from "../../services/security/Product/product.service";
 import {CategoryService} from "../../services/security/Product/category.service";
@@ -19,8 +19,10 @@ import {Product} from "../../entities/Product";
   styleUrl: './add-product-modal.component.css'
 })
 export class AddProductModalComponent implements OnInit {
-    @Output() productAdded = new EventEmitter<any>();
-    productForm!: FormGroup;
+  @Output() productAdded:EventEmitter<Product> = new EventEmitter<Product>();
+
+
+  productForm!: FormGroup;
     categories: Category[] = [];
 
     constructor(
@@ -28,9 +30,7 @@ export class AddProductModalComponent implements OnInit {
       private productService: ProductService,
       private categoryService: CategoryService,
       public activeModal: NgbActiveModal
-    ) {
-      this.loadCategories();
-    }
+    ) {}
 
     ngOnInit() {
       this.productForm = this.fb.group({
@@ -42,6 +42,7 @@ export class AddProductModalComponent implements OnInit {
         description: this.fb.control(""),
 
       });
+      this.loadCategories();
     }
 
     loadCategories() {
@@ -73,9 +74,9 @@ export class AddProductModalComponent implements OnInit {
 
       // Call the addProduct method from ProductService to add the product
       this.productService.addProduct(productData, file).subscribe(
-        (response) => {
+        (products:Product) => {
           // Emit an event to notify the parent component that a new product has been added
-          this.productAdded.emit();
+          this.productAdded.emit(products);
           // Close the modal
           this.closeModal();
         },

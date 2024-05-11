@@ -1,0 +1,9 @@
+/* Hover effect for buttons */
+.btn-hover:hover {
+  transform: translateY(-1px);
+}
+
+/* Hover effect for category item */
+.category-item:hover {
+  background-color: #e2e8f0;
+}

@@ -41,7 +41,7 @@ constructor( private snackBar: MatSnackBar
   handleRegistration() {
 
     if (this.formRegistration.valid) {
-      const utilisateur: Utilisateur = {
+      const formdata = {
         nom: this.formRegistration.value.nom,
         prenom: this.formRegistration.value.prenom,
         datenaiss: null,
@@ -52,7 +52,7 @@ constructor( private snackBar: MatSnackBar
       };
       // Get the profile picture file from the form
       const file = this.formRegistration.value.profilePicture;
-      this.authService.register(utilisateur, file).subscribe(
+      this.authService.register(formdata, file).subscribe(
         response => {
           // Check if the response contains a message
           if (response.message) {

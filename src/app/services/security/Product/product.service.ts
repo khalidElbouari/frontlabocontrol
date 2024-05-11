@@ -30,13 +30,11 @@ export class ProductService {
     formData.append('name', product.name);
     formData.append('description', product.description);
     formData.append('category', product.category?.toString()); // Use optional chaining here
-    formData.append('price', product.price?.toString()); // Use optional chaining here
-    formData.append('stockQuantity', product.stockQuantity?.toString()); // Use optional chaining here
+    formData.append('price', product.price?.toString());
+    formData.append('stockQuantity', product.stockQuantity?.toString());
     formData.append('image', image);
-
     return this.http.post<Product>(`${this.apiUrl}/add`, formData);
   }
-
 
 }
 

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { ProductService } from '../../services/security/Product/product.service';
 import { Product } from '../../entities/Product';
 import {CommonModule, NgForOf} from "@angular/common";
@@ -11,15 +11,15 @@ import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
   templateUrl: './product.component.html',
   standalone: true,
   imports: [
-    CommonModule,
-    AddProductModalComponent
+    CommonModule
   ],
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  products: Product[] = [];
+  @Input() products: Product[] = [];
   selectedProduct: Product | null = null;
-  @Input() prods!: Product[];
+
+
 
   constructor(private productService: ProductService, private sanitizer: DomSanitizer) {
   }
@@ -73,10 +73,7 @@ export class ProductComponent implements OnInit {
     }
   }
   // Subscribe to the productAdded event emitted by AddProductComponent
-  onProductAdded(): void {
-    // Reload the products
-    this.loadProducts();
-  }
+
   addToCart(product: Product) {
   }
   // New method to generate image URL
@@ -96,7 +93,6 @@ export class ProductComponent implements OnInit {
       return 'assets/placeholder-image.jpg'; // Replace with your placeholder image path
     }
   }
-
 
 
 }

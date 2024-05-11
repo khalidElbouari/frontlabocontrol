@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import {ProductComponent} from "./features/product/product.component";
 
 import {HomeComponent} from "./features/shared/home/home.component";
-import {AdminTemplateComponent} from "./features/admin-template/admin-template.component";
 import {PageNoteFoundComponent} from "./features/shared/page-note-found/page-note-found.component";
 import {SignUpComponent} from "./authentication/sign-up/sign-up.component";
 import {LoginComponent} from "./authentication/login/login.component";

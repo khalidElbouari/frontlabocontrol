@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {NgIf} from "@angular/common";
 import {AuthService} from "../../services/security/auth.service";
+import {Product} from "../../entities/Product";
+import {Utilisateur} from "../../entities/Utilisateur";
 
 @Component({
   selector: 'app-nav',
@@ -23,5 +25,17 @@ export class NavComponent {
   ngOnInit(): void {
     this.profilePictureUrl = localStorage.getItem('profilePictureUrl') ?? '/assets/favicon/defaultProfile.jpg';
   }
+
+  getImageSrc(): string {
+    if (this.authService.imageData && this.authService.imageData.length > 0) {
+      const blob = new Blob([this.authService.imageData], { type: 'image/jpeg' });
+      return URL.createObjectURL(blob);
+    } else {
+      return 'assets/placeholder-image.jpg'; // Replace with your placeholder image path
+    }
+  }
+
+
+
 
 }
