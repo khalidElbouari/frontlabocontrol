@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Product } from '../../../entities/Product';
+import { Product } from '../../entities/Product';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -36,5 +36,13 @@ export class ProductService {
     return this.http.post<Product>(`${this.apiUrl}/add`, formData);
   }
 
+
+  getImageSrc(product: Product): string {
+    if (product.imageData) {
+      return `data:image/jpeg;base64,${product.imageData}`;
+    } else {
+      return 'assets/placeholder-image.jpg'; // Replace with your placeholder image path
+    }
+  }
 }
 

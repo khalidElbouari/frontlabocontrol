@@ -1,10 +1,12 @@
+import {Category} from "./Category";
+
 export class Product {
   id?: number;
   name: string;
   description: string;
   price: number;
   stockQuantity: number;
-  category: any;
+  category: Category;
   imagePath: string | undefined;
   imageData: Uint8Array | undefined; // Add the imageData property
 
@@ -14,7 +16,7 @@ export class Product {
     description: string,
     price: number,
     stockQuantity: number,
-    category: any,
+    category: Category,
     imagePath: string,
     imageData: Uint8Array // Add the imageData parameter
   ) {

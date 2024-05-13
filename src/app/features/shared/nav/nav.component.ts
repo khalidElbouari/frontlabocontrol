@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {NgIf} from "@angular/common";
-import {AuthService} from "../../services/security/auth.service";
-import {Product} from "../../entities/Product";
-import {Utilisateur} from "../../entities/Utilisateur";
+import {AuthService} from "../../../services/security/auth.service";
+import {Product} from "../../../entities/Product";
+import {Utilisateur} from "../../../entities/Utilisateur";
 
 @Component({
   selector: 'app-nav',

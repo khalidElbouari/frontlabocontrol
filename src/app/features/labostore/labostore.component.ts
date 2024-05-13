@@ -1,15 +1,15 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {Product} from "../../entities/Product";
-import {ProductService} from "../../services/security/Product/product.service";
+import {ProductService} from "../../services/Product/product.service";
 import {ProductComponent} from "../product/product.component";
 import {NgIf} from "@angular/common";
-import {NavComponent} from "../nav/nav.component";
+import {NavComponent} from "../shared/nav/nav.component";
 import {AuthService} from "../../services/security/auth.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AddProductModalComponent} from "../add-product-modal/add-product-modal.component";
 import {CategoryComponent} from "../category/category.component";
 import {AddCategoryModalComponent} from "../add-category-modal/add-category-modal.component";
-import {CategoryService} from "../../services/security/Product/category.service";
+import {CategoryService} from "../../services/Product/category.service";
 import {Category} from "../../entities/Category";
 
 @Component({

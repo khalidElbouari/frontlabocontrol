@@ -76,6 +76,7 @@ export class AuthService {
     // Remove stored tokens
     localStorage.removeItem('accessToken');
     localStorage.removeItem('userData');
+    localStorage.removeItem('cartItems');
     // Navigate to login page
     this.router.navigateByUrl( '/labostore');
   }

@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {NgForOf, NgIf} from "@angular/common";
 import {AddCategoryModalComponent} from "../add-category-modal/add-category-modal.component";
 import {Category} from "../../entities/Category";
-import {CategoryService} from "../../services/security/Product/category.service";
+import {CategoryService} from "../../services/Product/category.service";
 import {AuthService} from "../../services/security/auth.service";
 
 @Component({
@@ -39,16 +39,20 @@ export class CategoryComponent {
 
 
   onDeleteCategory(categoryId: number): void {
-    this.categoryService.deleteCategory(categoryId).subscribe({
-      next: () => {
-        console.log('Category deleted successfully.');
-        this.loadCategories(); // Reload categories after deletion
-      },
-      error: (error) => {
-        console.error('Error deleting category:', error);
-      }
-    });
+    const confirmDelete = window.confirm('Are you sure you want to delete this category?');
+    if (confirmDelete) {
+      this.categoryService.deleteCategory(categoryId).subscribe({
+        next: () => {
+          console.log('Category deleted successfully.');
+          this.loadCategories(); // Reload categories after deletion
+        },
+        error: (error) => {
+          console.error('Error deleting category:', error);
+        }
+      });
+    }
   }
+
   onUpdateCategory(category: Category) {
 
   }

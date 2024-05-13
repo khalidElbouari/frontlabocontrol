@@ -11,6 +11,7 @@ import {authorizationGuard} from "./guards/authorization.guard";
 import {NotAuthorizedComponent} from "./authentication/not-authorized/not-authorized.component";
 import {LabostoreComponent} from "./features/labostore/labostore.component";
 import {CartComponent} from "./features/cart/cart.component";
+import {ProductDetailsComponent} from "./features/product-details/product-details.component";
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full' },
@@ -26,7 +27,7 @@ export const routes: Routes = [
     ]
   },
   { path: 'cart', component: CartComponent },
-
+  { path: 'productdetails/:id', component: ProductDetailsComponent },
   { path: 'not-authorized', component: NotAuthorizedComponent },
   { path: '**', component: PageNoteFoundComponent },
 ];

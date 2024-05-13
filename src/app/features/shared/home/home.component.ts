@@ -1,7 +1,6 @@
 import {Component, ElementRef, HostListener, Renderer2} from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
 import {RouterLink} from "@angular/router";
-import {NavbarComponent} from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-home',
@@ -9,7 +8,6 @@ import {NavbarComponent} from "../navbar/navbar.component";
   imports: [
     NgOptimizedImage,
     RouterLink,
-    NavbarComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
