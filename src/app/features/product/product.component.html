@@ -16,8 +16,7 @@
 
             <!-- Conditionally display Admin Actions Icons -->
             <div class="admin-icons" *ngIf="authService.isAuthenticated && authService.roles.includes('ADMIN')">
-
-              <button class="action-icon me-3" title="Update">
+              <button class="action-icon me-3" title="Update" (click)="openUpdateModal(product)">
                 <i class="bi bi-pencil-square"></i>
               </button>
               <button class="action-icon" title="Delete" (click)="deleteProduct(product)">

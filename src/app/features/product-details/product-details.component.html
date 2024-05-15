@@ -1,4 +1,4 @@
-<app-nav></app-nav>
+<app-nav [cartItemCount]="cartItemCount" ></app-nav>
 <br><br><br><br><br>
 <hr>
 
@@ -32,23 +32,23 @@
             <!-- Product description -->
             <p class="mb-4">{{ product.description }}</p>
             <!-- Quantity input -->
-            <div class="input-group quantity mb-5" style="width: 100px;">
+            <div *ngIf="!authService.isAuthenticated || !authService.roles.includes('ADMIN')" class="input-group quantity mb-5" style="width: 100px;">
               <div class="input-group-btn">
-                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                  <i class="fa fa-minus"></i>
+                <button class="btn btn-sm btn-minus rounded-circle bg-light border" (click)="decrementQuantity(product)">
+                  <i class="bi bi-dash"></i>
                 </button>
               </div>
-              <input type="text" class="form-control form-control-sm text-center border-0" value="1">
+              <input type="text" class="form-control form-control-sm text-center border-0">
               <div class="input-group-btn">
-                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                  <i class="fa fa-plus"></i>
+                <button class="btn btn-sm btn-plus rounded-circle bg-light border" (click)="incrementQuantity(product)">
+                  <i class="bi bi-plus"></i>
                 </button>
               </div>
             </div>
             <!-- Add to cart button -->
-            <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
-              <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-            </a>
+            <button *ngIf="!authService.isAuthenticated || !authService.roles.includes('ADMIN')" (click)="addToCart(product)" href="#" class="btn border border-secondary rounded-pill px-3 text-primary addToCart-btn">
+              <i class="bi bi-cart-plus me-2 text-primary"></i> Ajouter aux cart
+            </button>
           </div>
         </div>
       </div>

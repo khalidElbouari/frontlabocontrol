@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { ProductService } from '../../services/Product/product.service';
 import { Product } from '../../entities/Product';
 import {CommonModule} from "@angular/common";
@@ -7,6 +7,10 @@ import {Router} from "@angular/router";
 import {CartService} from "../../services/cart/cart.service";
 import {CartItem} from "../../entities/CartItem";
 import {Cart} from "../../entities/Cart";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {UpdateProductModalComponent} from "../update-product-modal/update-product-modal.component";
+import {Category} from "../../entities/Category";
+import {CartItemService} from "../../services/cart/cart-item.service";
 
 @Component({
   selector: 'app-product',
@@ -20,13 +24,16 @@ import {Cart} from "../../entities/Cart";
 export class ProductComponent implements OnInit {
   @Input() products: Product[] = [];
   selectedProduct: Product | null = null;
+  @Output() productAddedToCart: EventEmitter<void> = new EventEmitter<void>();
+
 
 
 
   constructor(protected authService:AuthService,
               protected productService: ProductService,
               private router: Router,
-              protected cartService:CartService) {
+              protected cartService:CartService,private modalService: NgbModal,
+              private cartItemService: CartItemService) {
   }
 
   ngOnInit(): void {
@@ -52,31 +59,16 @@ export class ProductComponent implements OnInit {
           this.loadProducts(); // Reload the products list
         },
         error => {
-          console.error('Error deleting product:', error);
+          if (error.status === 400) {
+            alert('Product is in carts and cannot be deleted');
+          } else {
+            console.error('Error deleting product:', error);
+          }
         }
       );
     }
   }
 
-  updateProduct(product: Product): void {
-    this.selectedProduct = product; // Set the selected product
-  }
-
-  saveUpdate(): void {
-    if (this.selectedProduct) {
-      this.productService.updateProduct(this.selectedProduct.id, this.selectedProduct).subscribe(
-        updatedProduct => {
-          console.log('Product updated successfully:', updatedProduct);
-          this.selectedProduct = null; // Clear the selected product
-          this.loadProducts(); // Reload the products list
-        },
-        error => {
-          console.error('Error updating product:', error);
-        }
-      );
-    }
-  }
-  // Subscribe to the productAdded event emitted by AddProductComponent
 
 
   navigateToProductDetail(product: Product): void {
@@ -85,34 +77,22 @@ export class ProductComponent implements OnInit {
 
   addToCart(product: Product): void {
     if (this.authService.isAuthenticated) {
-      // If user is logged in, fetch user's cart from backend
-      this.cartService.getCart().subscribe(
+      // If user is logged in, fetch user ID
+      const userId = this.authService.userId;
+
+      // Call the addToCart method with the user ID
+      this.cartService.addToCart(userId, product).subscribe(
         (cart: Cart) => {
-          // Create a new cart item with the selected product
-          const cartItem: CartItem = {
-            id: undefined, // Assuming the backend generates the ID
-            cart: cart,    // Associate the cart with the cart item
-            product: product,
-            quantity: 1     // Set initial quantity to 1
-          };
-          // Add the cart item to the user's cart
-          this.cartService.addToCart(cartItem).subscribe(
-            () => {
-              // Successfully added product to cart on backend
-              // You can optionally update the UI or show a success message
-            },
-            error => {
-              console.error('Error adding product to cart:', error);
-              // Handle error, e.g., show error message to user
-            }
-          );
+          // Successfully added product to cart on backend
+          this.productAddedToCart.emit();
+
         },
         error => {
-          console.error('Error fetching user\'s cart:', error);
+          console.error('Error adding product to cart:', error);
           // Handle error, e.g., show error message to user
         }
       );
-    } else {
+    }  else {
       // If user is not logged in, add product to local storage
       let cartItems: CartItem[] = JSON.parse(localStorage.getItem('cartItems') ?? '[]');
       // Check if the product is already in the cart
@@ -128,5 +108,15 @@ export class ProductComponent implements OnInit {
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }
   }
+
+  openUpdateModal(product: any) {
+    const modalRef = this.modalService.open(UpdateProductModalComponent, { centered: true });
+    modalRef.componentInstance.product = product;
+    modalRef.componentInstance.productUpdated.subscribe((updatedProduct: any) => { // Explicitly specify the type
+      // Product updated, reload the products list
+      this.loadProducts();
+    });
+  }
+
 
 }

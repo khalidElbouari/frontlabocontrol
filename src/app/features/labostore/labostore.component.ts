@@ -11,6 +11,8 @@ import {CategoryComponent} from "../category/category.component";
 import {AddCategoryModalComponent} from "../add-category-modal/add-category-modal.component";
 import {CategoryService} from "../../services/Product/category.service";
 import {Category} from "../../entities/Category";
+import {CartItem} from "../../entities/CartItem";
+import {CartService} from "../../services/cart/cart.service";
 
 @Component({
   selector: 'app-labostore',
@@ -31,16 +33,19 @@ export class LabostoreComponent implements OnInit{
   categories: Category[] | undefined;
   showAddCategoryModal: boolean = false;
   showAddProductModal: boolean = false;
+  cartItemCount: number=0;
 
 
   constructor(private productService: ProductService,
               protected authService: AuthService,
               private modalService: NgbModal,
               private categoryService: CategoryService,
+              private cartService: CartService,
              ) { }
 
   ngOnInit(): void {
     this.getProducts();
+    this.updateCartItemCount();
   }
 
   getProducts(): void {
@@ -70,5 +75,25 @@ export class LabostoreComponent implements OnInit{
   }
   onProductAdded(): void {
     this.getProducts(); // Reload products upon addition
+  }
+  onProductAddedToCart(): void {
+    this.updateCartItemCount(); // Update cart count when a product is added
+  }
+  updateCartItemCount(): void {
+    if (this.authService.isAuthenticated) {
+      this.cartService.getCartItems(this.authService.userId)
+        .subscribe((cartItems: CartItem[]) => {
+          this.cartItemCount = cartItems.length;
+        });
+    } else {
+      const cartItemsString = localStorage.getItem('cartItems');
+      if (cartItemsString) {
+        const cartItems: CartItem[] = JSON.parse(cartItemsString);
+        this.cartItemCount = cartItems.length;
+      } else {
+        // If there are no cart items in local storage, set cartItemCount to 0
+        this.cartItemCount = 0;
+      }
+    }
   }
 }

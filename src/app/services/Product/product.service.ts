@@ -20,8 +20,16 @@ export class ProductService {
     return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
   }
 
-  updateProduct(id: number | undefined, product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.apiUrl}/${id}`, product);
+  updateProduct(productId: string, productData: any, file: File) {
+    const formData = new FormData();
+    formData.append('name', productData.name);
+    formData.append('description', productData.description);
+    formData.append('price', productData.price);
+    formData.append('category', productData.category);
+    formData.append('stockQuantity', productData.stockQuantity);
+    formData.append('image', file);
+
+    return this.http.put<any>(`${this.apiUrl}/${productId}`, formData);
   }
 
 

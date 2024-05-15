@@ -1,0 +1,16 @@
+.card:hover .details-icon {
+  opacity: 1; /* Show details icon on hover */
+}
+
+.addToCart-btn {
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.addToCart-btn:hover {
+  background-color: #007bff !important; /* Blue background on hover */
+  color: #fff !important; /* White text on hover */
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5) !important; /* Add a slight shadow on hover */
+}
+.details-icon i {
+  font-size: 1.5rem; /* Adjust the font size as needed */
+}

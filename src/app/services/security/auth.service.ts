@@ -10,6 +10,7 @@ import {NavigationEnd, Router} from "@angular/router";
 })
 export class AuthService {
   isAuthenticated : boolean=false;
+  userId!:number;
   roles : any;
   username : any;
   accessToken! : string;
@@ -38,6 +39,7 @@ export class AuthService {
     this.accessToken= data['access-token'];
     let decodedJwt:any= jwtDecode(this.accessToken);
     this.username=decodedJwt.sub;
+    this.userId=decodedJwt.userId;
     this.roles=decodedJwt.scope;
     this.fullName=decodedJwt.fullName;
     this.imageData = this.base64ToArrayBuffer(data['imageData']);

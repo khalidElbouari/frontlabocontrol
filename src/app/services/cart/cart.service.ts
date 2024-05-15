@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {catchError, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Cart} from "../../entities/Cart";
@@ -10,25 +10,27 @@ import {Product} from "../../entities/Product";
 })
 export class CartService {
   private baseUrl = 'http://localhost:8055/api/carts';
+  productAddedToCart: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private http: HttpClient) { }
 
-  getCart(): Observable<Cart> {
-    return this.http.get<Cart>(`${this.baseUrl}/user`).pipe(
-      catchError(error => {
-        console.error('Error fetching user\'s cart:', error);
-        throw error;
+
+  addToCart(userId: number, product: Product): Observable<Cart> {
+    const url = `${this.baseUrl}/add?userId=${userId}`;
+    return this.http.post<Cart>(url, product).pipe(
+      catchError((error) => {
+        // Handle error
+        console.error('Error adding product to cart:', error,product,userId);
+        throw error; // Rethrow the error to be caught by the caller
       })
+
     );
   }
 
-  addToCart(cartItem: CartItem): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/add`, cartItem).pipe(
-      catchError(error => {
-        console.error('Error adding product to cart:', error);
-        throw error;
-      })
-    );
+  // Define the getCartItems method
+  getCartItems(userId: number): Observable<CartItem[]> {
+    const url = `${this.baseUrl}/items?userId=${userId}`; // Adjust the URL as per your backend API
+    return this.http.get<CartItem[]>(url);
   }
 
 
