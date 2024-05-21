@@ -35,26 +35,20 @@ export class ProductDetailsComponent implements OnInit{
               ) { }
 
   ngOnInit(): void {
-    // Retrieve product data from router state
     this.product = history.state.product;
     this.updateCartItemCount();
   }
 
   addToCart(product: Product): void {
     if (this.authService.isAuthenticated) {
-      // If user is logged in, fetch user ID
       const userId = this.authService.userId;
-
       // Call the addToCart method with the user ID
       this.cartService.addToCart(userId, product).subscribe(
         (cart: Cart) => {
-          // Successfully added product to cart on backend
-          // You can optionally update the UI or show a success message
           this.updateCartItemCount();
         },
         error => {
           console.error('Error adding product to cart:', error);
-          // Handle error, e.g., show error message to user
         }
       );
     }  else {
@@ -71,6 +65,7 @@ export class ProductDetailsComponent implements OnInit{
       }
       // Store the updated cart items back into local storage
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      this.updateCartItemCount();
     }
   }
 
@@ -80,19 +75,13 @@ export class ProductDetailsComponent implements OnInit{
   }
   updateCartItemCount(): void {
     if (this.authService.isAuthenticated) {
-      this.cartService.getCartItems(this.authService.userId)
+      this.cartService.getCartItemsForUser(this.authService.userId)
         .subscribe((cartItems: CartItem[]) => {
           this.cartItemCount = cartItems.length;
         });
     } else {
-      const cartItemsString = localStorage.getItem('cartItems');
-      if (cartItemsString) {
-        const cartItems: CartItem[] = JSON.parse(cartItemsString);
-        this.cartItemCount = cartItems.length;
-      } else {
-        // If there are no cart items in local storage, set cartItemCount to 0
-        this.cartItemCount = 0;
-      }
+      const cartItems = this.cartService.getCartItemsFromLocalStorage();
+      this.cartItemCount = cartItems.length;
     }
   }
 

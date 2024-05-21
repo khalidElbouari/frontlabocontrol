@@ -7,6 +7,10 @@ import {NgForOf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {ProductService} from "../../services/Product/product.service";
 import {CartItemService} from "../../services/cart/cart-item.service";
+import {DepartmentModalComponent} from "../department-modal/department-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {AddCategoryModalComponent} from "../add-category-modal/add-category-modal.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +18,8 @@ import {CartItemService} from "../../services/cart/cart-item.service";
   imports: [
     NavComponent,
     NgForOf,
-    FormsModule
+    FormsModule,
+    DepartmentModalComponent
   ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
@@ -27,6 +32,8 @@ export class CartComponent implements OnInit{
               private authService: AuthService,
               protected productService: ProductService,
               protected cartItemService: CartItemService,
+              private modalService: NgbModal,
+              private router: Router
   ) { }
   ngOnInit(): void {
     // Check if user is authenticated
@@ -44,7 +51,7 @@ export class CartComponent implements OnInit{
     // Get the user ID from the authentication service
     const userId = this.authService.userId;
     // Call the service method to fetch cart items for the logged-in user
-    this.cartService.getCartItems(userId).subscribe(
+    this.cartService.getCartItemsForUser(userId).subscribe(
       cartItems => {
         this.cartItems = cartItems;
       },
@@ -147,22 +154,23 @@ export class CartComponent implements OnInit{
 
   updateCartItemCount(): void {
     if (this.authService.isAuthenticated) {
-      this.cartService.getCartItems(this.authService.userId)
+      this.cartService.getCartItemsForUser(this.authService.userId)
         .subscribe((cartItems: CartItem[]) => {
           this.cartItemCount = cartItems.length;
         });
     } else {
-      const cartItemsString = localStorage.getItem('cartItems');
-      if (cartItemsString) {
-        const cartItems: CartItem[] = JSON.parse(cartItemsString);
-        this.cartItemCount = cartItems.length;
-      } else {
-        // If there are no cart items in local storage, set cartItemCount to 0
-        this.cartItemCount = 0;
-      }
+      const cartItems = this.cartService.getCartItemsFromLocalStorage();
+      this.cartItemCount = cartItems.length;
     }
   }
 
-  proceedToCheckout(): void {
+  openDepartmentModal() {
+    if (!this.authService.isAuthenticated) {
+      this.router.navigate(['/login']);
+      return; // Prevent further execution
+    }
+    const modalRef =  this.modalService.open(DepartmentModalComponent) // Adjust YourModalComponent to your modal component
+    // You can add more configuration options for the modal here if needed
   }
+
 }

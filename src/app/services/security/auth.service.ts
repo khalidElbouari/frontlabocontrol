@@ -4,6 +4,7 @@ import {jwtDecode} from "jwt-decode";
 import {Utilisateur} from "../../entities/Utilisateur";
 import {map, Observable} from "rxjs";
 import {NavigationEnd, Router} from "@angular/router";
+import {CartService} from "../cart/cart.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthService {
   imageData!: Uint8Array; // Change the type to Uint8Array
 
 
-  constructor(private http:HttpClient,private router: Router) {
+  constructor(private http:HttpClient,private router: Router,private cartService:CartService) {
     // Subscribe to NavigationEnd event to trigger token expiration check after each navigation
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -84,6 +85,7 @@ export class AuthService {
   }
 
 
+/*
   loadTokenFromLocalStorage() {
     let token = localStorage.getItem("accessToken");
     let data = JSON.parse(localStorage.getItem("userData") || '{}'); // Retrieve the entire data object from local storage
@@ -95,6 +97,26 @@ export class AuthService {
         this.username = undefined;
         this.roles = undefined;
         localStorage.removeItem('accessToken');
+        this.router.navigateByUrl("/login");
+      } else {
+        this.loadProfile(data); // Pass the entire data object to loadProfile
+      }
+    }
+  }
+*/
+  loadTokenFromLocalStorage() {
+    let token = localStorage.getItem("accessToken");
+    let data = JSON.parse(localStorage.getItem("userData") || '{}'); // Retrieve the entire data object from local storage
+
+    if (token) {
+      if (this.isTokenExpired(token)) {
+        alert('Your session has expired. Please log in again.');
+        this.isAuthenticated = false;
+        this.username = undefined;
+        this.roles = undefined;
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('cartItems');
+        localStorage.removeItem('userData');
         this.router.navigateByUrl("/login");
       } else {
         this.loadProfile(data); // Pass the entire data object to loadProfile

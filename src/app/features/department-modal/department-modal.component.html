@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h4 class="modal-title">Sélectionner l'agence</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+</div>
+<div class="modal-body">
+  <form>
+    <p>De quel département souhaitez-vous obtenir vos produits ?</p>
+    <div class="mb-3">
+      <label for="departmentSelect" class="form-label">Choisissez une agence:</label>
+      <select class="form-select" id="departmentSelect" [(ngModel)]="selectedDepartment" (change)="onDepartmentChange($event)">
+        <option *ngFor="let department of departments" [value]="department.value">{{ department.label }}</option>
+      </select>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeModal()">Fermer</button>
+  <button type="button" class="btn btn-primary" (click)="generatePDF()">Procéder</button>
+</div>

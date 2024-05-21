@@ -7,8 +7,8 @@
       <div class="card my-5">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-end mb-4">
-            <h3 class="mb-0"><b>Sign up</b></h3>
-            <a [routerLink]="['/login']" class="link-primary">Already have an account?</a>
+            <h3 class="mb-0"><b>Inscription</b></h3>
+            <a [routerLink]="['/login']" class="link-primary">Vous avez déjà un compte ?</a>
            </div>
           <form  [formGroup]="formRegistration" (ngSubmit)="handleRegistration()" >
           <div class="row">
@@ -26,7 +26,7 @@
             </div>
           </div>
             <div class="form-group mb-3">
-              <label class="form-label" for="photo">photo</label>
+              <label class="form-label" for="photo">photo*</label>
               <input type="file" class="form-control" id="photo" placeholder="photo" (change)="onPhotoChange($event)" formControlName="profilePicture" />
             </div>
 
@@ -38,10 +38,10 @@
             <label class="form-label" for="password">Mot de passe*</label>
             <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password"/>
           </div>
-          <p class="mt-4 text-sm text-muted">By Signing up, you agree to our <a href="javascript:" class="text-primary"> Terms of Service </a> and
-            <a href="javascript:" class="text-primary"> Privacy Policy</a></p>
+          <p class="mt-4 text-sm text-muted">En vous inscrivant, vous acceptez nos <a href="javascript:" class="text-primary"> Conditions d'utilisation</a> et
+            <a href="javascript:" class="text-primary">Politique de confidentialité</a></p>
           <div class="d-grid mt-3">
-            <button type="submit" class="btn btn-primary">cree un compte</button>
+            <button type="submit" class="btn btn-primary">Créer un compte</button>
           </div>
           </form>
           <hr>

@@ -2,6 +2,7 @@ import {Component, OnInit, signal} from '@angular/core';
 import {AuthService} from "../../services/security/auth.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
+import {CartService} from "../../services/cart/cart.service";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,9 @@ export class LoginComponent implements OnInit{
 
   formlogin!:FormGroup;
   constructor(private fb:FormBuilder,private authservise:AuthService,
-              private router:Router) {
+              private router:Router,
+              private cartService:CartService
+              ) {
   }
   ngOnInit(): void {
     this.formlogin=this.fb.group({
@@ -33,6 +36,13 @@ export class LoginComponent implements OnInit{
     this.authservise.login(username, password).subscribe(
       (data: any) => {
         this.authservise.loadProfile(data);
+        // If user is authenticated and there are cart items stored locally, process them
+        const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+        this.cartService.processCartItems(this.authservise.userId,cartItems).subscribe(() => {
+        });
+        // After processing, remove cart items from local storage
+        localStorage.removeItem('cartItems');
+
         this.router.navigateByUrl("/labostore");
       },
       err => {

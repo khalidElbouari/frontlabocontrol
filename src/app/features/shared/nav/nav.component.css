@@ -107,12 +107,13 @@
 .profile-picture {
   max-height: 60px;
   max-width: 100px;
-  border-radius: 50%;
+  border-radius: 30%;
   cursor: pointer;
   padding-right: 20px;
   transition: transform 0.3s; /* Add a smooth transition effect */
 }
-
-.profile-picture:hover {
-  transform: translate(-5%, -5%); /* Move the picture up and to the left slightly */
+.cart-item-count {
+  font-size: 1rem; /* Adjust font size as needed */
+  line-height: 1.2;   /* Adjust line height for better alignment */
+  padding: 0.25rem;   /* Add padding to center the text */
 }

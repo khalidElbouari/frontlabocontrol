@@ -79,21 +79,17 @@ export class ProductComponent implements OnInit {
     if (this.authService.isAuthenticated) {
       // If user is logged in, fetch user ID
       const userId = this.authService.userId;
-
       // Call the addToCart method with the user ID
       this.cartService.addToCart(userId, product).subscribe(
         (cart: Cart) => {
           // Successfully added product to cart on backend
           this.productAddedToCart.emit();
-
         },
         error => {
           console.error('Error adding product to cart:', error);
-          // Handle error, e.g., show error message to user
         }
       );
-    }  else {
-      // If user is not logged in, add product to local storage
+    }else {
       let cartItems: CartItem[] = JSON.parse(localStorage.getItem('cartItems') ?? '[]');
       // Check if the product is already in the cart
       const existingItemIndex = cartItems.findIndex(item => item.product.id === product.id);
@@ -106,6 +102,8 @@ export class ProductComponent implements OnInit {
       }
       // Store the updated cart items back into local storage
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      this.productAddedToCart.emit(); // Emit event
+
     }
   }
 

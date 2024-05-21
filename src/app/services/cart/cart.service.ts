@@ -12,26 +12,38 @@ export class CartService {
   private baseUrl = 'http://localhost:8055/api/carts';
   productAddedToCart: EventEmitter<void> = new EventEmitter<void>();
 
+
   constructor(private http: HttpClient) { }
+//hadi ghat7ayad
+  getCartItemsForUser(userId: number): Observable<CartItem[]> {
+    const url = `${this.baseUrl}/items?userId=${userId}`;
+    return this.http.get<CartItem[]>(url);
+  }
+  // Fetch cart items for authenticated user
+/*  getCartItemsForUser(userId: number): Observable<CartItem[]> {
+    const url = `${this.baseUrl}/user/${userId}`;
+    return this.http.get<CartItem[]>(url);
+  }*/
 
-
+  // Fetch cart items from local storage for unauthenticated user
+  getCartItemsFromLocalStorage(): CartItem[] {
+    const cartItemsString = localStorage.getItem('cartItems');
+    return cartItemsString ? JSON.parse(cartItemsString) : [];
+  }
   addToCart(userId: number, product: Product): Observable<Cart> {
     const url = `${this.baseUrl}/add?userId=${userId}`;
     return this.http.post<Cart>(url, product).pipe(
       catchError((error) => {
-        // Handle error
         console.error('Error adding product to cart:', error,product,userId);
         throw error; // Rethrow the error to be caught by the caller
       })
-
     );
   }
-
-  // Define the getCartItems method
-  getCartItems(userId: number): Observable<CartItem[]> {
-    const url = `${this.baseUrl}/items?userId=${userId}`; // Adjust the URL as per your backend API
-    return this.http.get<CartItem[]>(url);
+  processCartItems(userId: number, cartItems: CartItem[]): Observable<any> {
+    const url = `${this.baseUrl}/process?userId=${userId}`;
+    return this.http.post<any>(url, cartItems);
   }
+
 
 
 }

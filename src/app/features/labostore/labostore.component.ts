@@ -81,7 +81,7 @@ export class LabostoreComponent implements OnInit{
   }
   updateCartItemCount(): void {
     if (this.authService.isAuthenticated) {
-      this.cartService.getCartItems(this.authService.userId)
+      this.cartService.getCartItemsForUser(this.authService.userId)
         .subscribe((cartItems: CartItem[]) => {
           this.cartItemCount = cartItems.length;
         });
