@@ -13,7 +13,6 @@
           <h4>{{ product.name }}</h4>
           <div class="d-flex justify-content-between align-items-center">
             <p class="text-dark fs-5 fw-bold mb-0">{{ product.price }} DH</p>
-
             <!-- Conditionally display Admin Actions Icons -->
             <div class="admin-icons" *ngIf="authService.isAuthenticated && authService.roles.includes('ADMIN')">
               <button class="action-icon me-3" title="Update" (click)="openUpdateModal(product)">
@@ -32,6 +31,7 @@
               </button>
             </div>
           </ng-container>
+
         </div>
       </div>
     </div>

@@ -1,16 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { ProductService } from '../../services/Product/product.service';
-import { Product } from '../../entities/Product';
+import { ProductService } from '../../../services/Product/product.service';
+import { Product } from '../../../entities/Product';
 import {CommonModule} from "@angular/common";
-import {AuthService} from "../../services/security/auth.service";
+import {AuthService} from "../../../services/security/auth.service";
 import {Router} from "@angular/router";
-import {CartService} from "../../services/cart/cart.service";
-import {CartItem} from "../../entities/CartItem";
-import {Cart} from "../../entities/Cart";
+import {CartService} from "../../../services/cart/cart.service";
+import {CartItem} from "../../../entities/CartItem";
+import {Cart} from "../../../entities/Cart";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UpdateProductModalComponent} from "../update-product-modal/update-product-modal.component";
-import {Category} from "../../entities/Category";
-import {CartItemService} from "../../services/cart/cart-item.service";
+import {Category} from "../../../entities/Category";
+import {CartItemService} from "../../../services/cart/cart-item.service";
 
 @Component({
   selector: 'app-product',
@@ -22,7 +22,7 @@ import {CartItemService} from "../../services/cart/cart-item.service";
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  @Input() products: Product[] = [];
+    @Input() products: Product[] = [];
   selectedProduct: Product | null = null;
   @Output() productAddedToCart: EventEmitter<void> = new EventEmitter<void>();
 

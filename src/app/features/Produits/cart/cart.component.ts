@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {NavComponent} from "../shared/nav/nav.component";
-import {CartService} from "../../services/cart/cart.service";
-import {AuthService} from "../../services/security/auth.service";
-import {CartItem} from "../../entities/CartItem";
+import {NavComponent} from "../../shared/nav/nav.component";
+import {CartService} from "../../../services/cart/cart.service";
+import {AuthService} from "../../../services/security/auth.service";
+import {CartItem} from "../../../entities/CartItem";
 import {NgForOf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import {ProductService} from "../../services/Product/product.service";
-import {CartItemService} from "../../services/cart/cart-item.service";
+import {ProductService} from "../../../services/Product/product.service";
+import {CartItemService} from "../../../services/cart/cart-item.service";
 import {DepartmentModalComponent} from "../department-modal/department-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AddCategoryModalComponent} from "../add-category-modal/add-category-modal.component";
+import {AddCategoryModalComponent} from "../../Categories/add-category-modal/add-category-modal.component";
 import {Router} from "@angular/router";
 
 @Component({

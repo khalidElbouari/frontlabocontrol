@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
-import { PdfService } from "../../services/pdf.service";
-import { CartItem } from "../../entities/CartItem";
-import { CartService } from "../../services/cart/cart.service";
-import { AuthService } from "../../services/security/auth.service";
+import { PdfService } from "../../../services/pdf.service";
+import { CartItem } from "../../../entities/CartItem";
+import { CartService } from "../../../services/cart/cart.service";
+import { AuthService } from "../../../services/security/auth.service";
 import {Router} from "@angular/router";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 

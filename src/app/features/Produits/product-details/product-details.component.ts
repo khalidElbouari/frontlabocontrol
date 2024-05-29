@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {CategoryComponent} from "../category/category.component";
-import {Product} from "../../entities/Product";
+import {CategoryComponent} from "../../Categories/category/category.component";
+import {Product} from "../../../entities/Product";
 import {ActivatedRoute} from "@angular/router";
-import {ProductService} from "../../services/Product/product.service";
-import {NavComponent} from "../shared/nav/nav.component";
-import {Cart} from "../../entities/Cart";
-import {CartItem} from "../../entities/CartItem";
-import {CartService} from "../../services/cart/cart.service";
-import {AuthService} from "../../services/security/auth.service";
+import {ProductService} from "../../../services/Product/product.service";
+import {NavComponent} from "../../shared/nav/nav.component";
+import {Cart} from "../../../entities/Cart";
+import {CartItem} from "../../../entities/CartItem";
+import {CartService} from "../../../services/cart/cart.service";
+import {AuthService} from "../../../services/security/auth.service";
 import {ReactiveFormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
 

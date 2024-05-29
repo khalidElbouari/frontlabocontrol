@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h4 class="modal-title">Mettre à jour la catégorie</h4>
+  <button type="button" class="btn-close" aria-label="Fermer" (click)="closeModal()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="categoryForm" (ngSubmit)="submitForm()">
+    <div class="mb-3">
+      <label for="categoryName" class="form-label">Nom *</label>
+      <input type="text" class="form-control" id="categoryName" formControlName="name">
+    </div>
+    <div class="mb-3">
+      <label for="categoryDescription" class="form-label">Description</label>
+      <textarea class="form-control" id="categoryDescription" formControlName="description" rows="4"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+  </form>
+</div>

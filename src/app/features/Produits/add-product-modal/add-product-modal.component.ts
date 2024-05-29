@@ -1,11 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {ProductService} from "../../services/Product/product.service";
-import {CategoryService} from "../../services/Product/category.service";
+import {ProductService} from "../../../services/Product/product.service";
+import {CategoryService} from "../../../services/Product/category.service";
 import {NgForOf} from "@angular/common";
-import {Category} from "../../entities/Category";
-import {Product} from "../../entities/Product";
+import {Category} from "../../../entities/Category";
+import {Product} from "../../../entities/Product";
 
 @Component({
   selector: 'app-add-product-modal',

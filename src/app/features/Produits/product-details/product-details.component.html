@@ -32,6 +32,7 @@
             <!-- Product description -->
             <p class="mb-4">{{ product.description }}</p>
             <!-- Quantity input -->
+<!--
             <div *ngIf="!authService.isAuthenticated || !authService.roles.includes('ADMIN')" class="input-group quantity mb-5" style="width: 100px;">
               <div class="input-group-btn">
                 <button class="btn btn-sm btn-minus rounded-circle bg-light border" (click)="decrementQuantity(product)">
@@ -45,6 +46,7 @@
                 </button>
               </div>
             </div>
+-->
             <!-- Add to cart button -->
             <button *ngIf="!authService.isAuthenticated || !authService.roles.includes('ADMIN')" (click)="addToCart(product)" href="#" class="btn border border-secondary rounded-pill px-3 text-primary addToCart-btn">
               <i class="bi bi-cart-plus me-2 text-primary"></i> Ajouter aux cart

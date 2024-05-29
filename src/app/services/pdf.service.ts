@@ -74,13 +74,15 @@ export class PdfService {
           bold: true,
           fontSize: 16,
           alignment: 'center',
-          margin: [0, 0, 0, 10]
+          margin: [0, 0, 0, 10],
+          color: 'blue' // Change color to blue
         },
         title: {
           bold: true,
           fontSize: 20,
           alignment: 'center',
-          margin: [0, 0, 0, 10]
+          margin: [0, 0, 0, 10],
+          color: 'red' // Change color to red
         },
         header: {
           bold: true,

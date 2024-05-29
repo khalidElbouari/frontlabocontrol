@@ -1,9 +1,11 @@
 import {Component, Input} from '@angular/core';
 import {NgForOf, NgIf} from "@angular/common";
 import {AddCategoryModalComponent} from "../add-category-modal/add-category-modal.component";
-import {Category} from "../../entities/Category";
-import {CategoryService} from "../../services/Product/category.service";
-import {AuthService} from "../../services/security/auth.service";
+import {Category} from "../../../entities/Category";
+import {CategoryService} from "../../../services/Product/category.service";
+import {AuthService} from "../../../services/security/auth.service";
+import {UpdateCategoryModalComponent} from "../update-category-modal/update-category-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-category',
@@ -17,9 +19,9 @@ import {AuthService} from "../../services/security/auth.service";
 export class CategoryComponent {
   @Input() categories!: Category[] | undefined;
 
-  constructor(private categoryService: CategoryService,protected authService: AuthService) {
-
-  }
+  constructor(private categoryService: CategoryService,
+              protected authService: AuthService,
+              private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.loadCategories();
@@ -36,10 +38,8 @@ export class CategoryComponent {
     );
   }
 
-
-
   onDeleteCategory(categoryId: number): void {
-    const confirmDelete = window.confirm('Are you sure you want to delete this category?');
+    const confirmDelete = window.confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?');
     if (confirmDelete) {
       this.categoryService.deleteCategory(categoryId).subscribe({
         next: () => {
@@ -53,13 +53,11 @@ export class CategoryComponent {
     }
   }
 
-  onUpdateCategory(category: Category) {
-
+  openUpdateModal(category: Category): void {
+    const modalRef = this.modalService.open(UpdateCategoryModalComponent);
+    modalRef.componentInstance.category = category;
+    modalRef.componentInstance.categoryUpdated.subscribe(() => {
+      this.loadCategories(); // Reload categories after update
+    });
   }
-
-  onCategoryClicked(category: Category) {}
-
-
-
-
 }

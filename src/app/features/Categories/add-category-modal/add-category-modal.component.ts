@@ -1,8 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgbActiveModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {CategoryService} from "../../services/Product/category.service";
-import {Category} from "../../entities/Category";
+import {CategoryService} from "../../../services/Product/category.service";
+import {Category} from "../../../entities/Category";
 
 @Component({
   selector: 'app-add-category-modal',
