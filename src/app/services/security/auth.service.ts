@@ -16,8 +16,7 @@ export class AuthService {
   username : any;
   accessToken! : string;
   fullName!:string;
-  imageData!: Uint8Array; // Change the type to Uint8Array
-
+  imageData!: Uint8Array;
 
   constructor(private http:HttpClient,private router: Router,private cartService:CartService) {
     // Subscribe to NavigationEnd event to trigger token expiration check after each navigation
@@ -84,26 +83,6 @@ export class AuthService {
     this.router.navigateByUrl( '/labostore');
   }
 
-
-/*
-  loadTokenFromLocalStorage() {
-    let token = localStorage.getItem("accessToken");
-    let data = JSON.parse(localStorage.getItem("userData") || '{}'); // Retrieve the entire data object from local storage
-
-    if (token) {
-      if (this.isTokenExpired(token)) {
-        alert('Your session has expired. Please log in again.');
-        this.isAuthenticated = false;
-        this.username = undefined;
-        this.roles = undefined;
-        localStorage.removeItem('accessToken');
-        this.router.navigateByUrl("/login");
-      } else {
-        this.loadProfile(data); // Pass the entire data object to loadProfile
-      }
-    }
-  }
-*/
   loadTokenFromLocalStorage() {
     let token = localStorage.getItem("accessToken");
     let data = JSON.parse(localStorage.getItem("userData") || '{}'); // Retrieve the entire data object from local storage
@@ -118,16 +97,15 @@ export class AuthService {
         localStorage.removeItem('cartItems');
         localStorage.removeItem('userData');
         this.router.navigateByUrl("/login");
-      } else {
+      }else {
         this.loadProfile(data); // Pass the entire data object to loadProfile
       }
     }
   }
-
-
   isTokenExpired(token: string): boolean {
     let decodedToken: any = jwtDecode(token);
     let currentTime = Math.floor(Date.now() / 1000);
     return decodedToken.exp < currentTime;
   }
+
 }

@@ -6,6 +6,7 @@ import {CategoryService} from "../../../services/Product/category.service";
 import {AuthService} from "../../../services/security/auth.service";
 import {UpdateCategoryModalComponent} from "../update-category-modal/update-category-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ProductService} from "../../../services/Product/product.service";
 
 @Component({
   selector: 'app-category',
@@ -21,7 +22,9 @@ export class CategoryComponent {
 
   constructor(private categoryService: CategoryService,
               protected authService: AuthService,
-              private modalService: NgbModal) {}
+              private modalService: NgbModal,
+              protected productService:ProductService
+  ) {}
 
   ngOnInit(): void {
     this.loadCategories();
@@ -57,7 +60,15 @@ export class CategoryComponent {
     const modalRef = this.modalService.open(UpdateCategoryModalComponent);
     modalRef.componentInstance.category = category;
     modalRef.componentInstance.categoryUpdated.subscribe(() => {
-      this.loadCategories(); // Reload categories after update
+      this.loadCategories();
+      this.loadProducts();
     });
+  }
+
+
+
+  loadProducts(): void {
+    this.productService.getAllProducts().subscribe(
+    );
   }
 }

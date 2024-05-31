@@ -18,7 +18,6 @@ import {Product} from "../../../entities/Product";
 export class UpdateCategoryModalComponent {
   @Input() category!: Category;
   @Output() categoryUpdated = new EventEmitter<Category>();
-  @Output() refrechProducts = new EventEmitter<Product>();
   categoryForm!: FormGroup;
 
   constructor(
@@ -54,8 +53,8 @@ export class UpdateCategoryModalComponent {
       this.categoryService.updateCategory(this.category.id, categoryData).subscribe(
         (updatedCategory: Category) => {
          this.categoryUpdated.emit(updatedCategory);
-         this.refrechProducts.emit();
-          this.closeModal();
+         this.productService.getAllProducts();
+         this.closeModal();
         },
         (error) => {
           console.error('Error updating category:', error);

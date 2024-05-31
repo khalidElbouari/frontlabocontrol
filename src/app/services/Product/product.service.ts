@@ -13,10 +13,6 @@ export class ProductService {
   getAllProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/all`);
   }
-  getall():Observable<Product>{
-    return this.http.get<Product>(`${this.apiUrl}/all`);
-  }
-
   deleteProduct(id: number | undefined): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
   }
@@ -42,9 +38,6 @@ export class ProductService {
 
     return this.http.put<any>(`${this.apiUrl}/${productId}`, formData);
   }
-
-
-
 
   getImageSrc(product: Product): string {
     if (product.imageData) {

@@ -71,8 +71,6 @@ export class AddProductModalComponent implements OnInit {
       };
 
       const file = this.productForm.value.image;
-
-      // Call the addProduct method from ProductService to add the product
       this.productService.addProduct(productData, file).subscribe(
         (products:Product) => {
           // Emit an event to notify the parent component that a new product has been added
