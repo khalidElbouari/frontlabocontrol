@@ -7,29 +7,50 @@
     <div class="mb-3">
       <label for="productName" class="form-label">Nom</label>
       <input type="text" class="form-control" id="productName" formControlName="name">
+      <div *ngIf="formControls['name'].invalid && (formControls['name'].dirty || formControls['name'].touched)" class="text-danger">
+        Le nom est requis.
+      </div>
     </div>
     <div class="mb-3">
       <label for="productPrice" class="form-label">Prix</label>
       <input type="number" class="form-control" id="productPrice" formControlName="price">
+      <div *ngIf="formControls['price'].invalid && (formControls['price'].dirty || formControls['price'].touched)" class="text-danger">
+        Un prix valide est requis.
+      </div>
     </div>
     <div class="mb-3">
       <label for="stockQuantity" class="form-label">Quantité en stock</label>
       <input type="number" class="form-control" id="stockQuantity" formControlName="stockQuantity">
+      <div *ngIf="formControls['stockQuantity'].invalid && (formControls['stockQuantity'].dirty || formControls['stockQuantity'].touched)" class="text-danger">
+        Une quantité en stock valide est requise.
+      </div>
     </div>
     <div class="mb-3">
       <label for="productCategory" class="form-label">Catégorie</label>
       <select class="form-select" id="productCategory" formControlName="category">
         <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
       </select>
+      <div *ngIf="formControls['category'].invalid && (formControls['category'].dirty || formControls['category'].touched)" class="text-danger">
+        La catégorie est requise.
+      </div>
     </div>
     <div class="mb-3">
       <label for="productImage" class="form-label">Image</label>
       <input type="file" class="form-control" id="productImage" (change)="onImageSelected($event)" accept="image/*" required formControlName="image">
+      <div *ngIf="formControls['image'].invalid && (formControls['image'].dirty || formControls['image'].touched)" class="text-danger">
+        Une image est requise.
+      </div>
     </div>
     <div class="mb-3">
       <label for="productDescription" class="form-label">Description</label>
       <textarea class="form-control" id="productDescription" formControlName="description" rows="4"></textarea>
+      <div *ngIf="formControls['description'].invalid && (formControls['description'].dirty || formControls['description'].touched)" class="text-danger">
+        La description est requise.
+      </div>
     </div>
     <button type="submit" class="btn btn-primary">Ajouter</button>
   </form>
+  <div *ngIf="productForm.invalid && productForm.touched" class="alert alert-danger mt-3">
+    Veuillez corriger les erreurs dans le formulaire avant de soumettre.
+  </div>
 </div>

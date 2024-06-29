@@ -19,6 +19,9 @@
             <label class="form-label" for="password">Mot de passe</label>
             <input type="password" class="form-control" id="password" placeholder="Password" value="123456789" formControlName="password"/>
           </div>
+            <div *ngIf="loginError" class="alert alert-danger">
+              {{ loginError }}
+            </div>
           <div class="d-flex mt-1 justify-content-between">
             <div class="form-check">
               <input class="form-check-input input-primary" type="checkbox" id="customCheckc1" checked="" />

@@ -46,7 +46,7 @@
               <!-- Add a check to conditionally show the 'Se connecter' item -->
               <a *ngIf="!authService.isAuthenticated" routerLink="/login" class="dropdown-item">Se connecter</a>
               <!-- Conditionally show the 'deconnecter' item -->
-              <a *ngIf="authService.isAuthenticated" (click)="logout()" href="#" class="dropdown-item">Déconnecter</a>
+              <a *ngIf="authService.isAuthenticated" (click)="logout()"  class="dropdown-item">Déconnecter</a>
             </div>
           </div>
         </div>

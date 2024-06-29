@@ -80,7 +80,10 @@ export class AuthService {
     localStorage.removeItem('userData');
     localStorage.removeItem('cartItems');
     // Navigate to login page
-    this.router.navigateByUrl( '/labostore');
+    // Navigate to login page and then refresh
+    this.router.navigateByUrl('/labostore').then(() => {
+      window.location.reload();
+    });
   }
 
   loadTokenFromLocalStorage() {
